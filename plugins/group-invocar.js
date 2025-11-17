@@ -4,7 +4,7 @@ const handler = async (msg, { conn }) => {
     const sender = (msg.key.participant || msg.key.remoteJid).replace(/[^0-9]/g, '');
     const isGroup = chatId.endsWith('@g.us');
 
-    await conn.sendMessage(chatId, { react: { text: '⭐', key: msg.key } });
+    await conn.sendMessage(chatId, { react: { text: '🎄', key: msg.key } });
 
     if (!isGroup) {
       await conn.sendMessage(chatId, {
@@ -22,13 +22,21 @@ const handler = async (msg, { conn }) => {
     const args = messageText.trim().split(' ').slice(1);
     const extraMsg = args.join(' ');
 
-    let texto = `>「✦」Invocación grupal\n\n`;
-    texto += `✐ Grupo: *${metadata.subject}*\n`;
-    texto += `ⴵ Miembros: *${participants.length}*\n`;
-    if (extraMsg) texto += `✰ Mensaje: *${extraMsg}*\n`;
-    texto += `\n❒ Menciones:\n`;
+    let texto = 
+`┏━━━━━━━━━━━━━━━━━━━┓
+🎅 *Invocación Navideña de las Sombras* 🎅
+┗━━━━━━━━━━━━━━━━━━━┛
+
+✐ Grupo: *${metadata.subject}*
+ⴵ Miembros: *${participants.length}*`;
+
+    if (extraMsg) texto += `\n✰ Mensaje: *${extraMsg}*`;
+
+    texto += `\n\n❒ Menciones:\n`;
     texto += participants.map(p => `» @${p.id.split('@')[0]}`).join('\n');
-    texto += `\n\n\n❒ Versión: *${vs}*`;
+
+    texto += `\n\n❄️ Versión: *${vs}*\n`;
+    texto += `\n✨ "Las sombras celebran bajo la nieve... ¿Quién más desea ser invocado en esta noche eterna?" ✨`;
 
     await conn.sendMessage(chatId, {
       text: texto,
@@ -46,7 +54,8 @@ const handler = async (msg, { conn }) => {
 
 handler.tags = ['grupo'];
 handler.help = ['invocar'];
-handler.command = ['tagall', 'invocar', 'todos'];
+// ✅ Ahora funciona con y sin prefijo
+handler.command = /^(tagall|invocar|todos)$/i;
 handler.group = true;
 handler.admin = true;
 
