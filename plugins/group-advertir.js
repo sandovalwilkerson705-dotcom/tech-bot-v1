@@ -1,39 +1,83 @@
 const handler = async (m, { conn, text, command, usedPrefix }) => {
-// if (m.mentionedJid.includes(conn.user.jid)) return; // Evitar advertir al bot mismo
-const pp = './src/catalogo.jpg'
-let number, ownerNumber, aa, who;
-if (m.isGroup) { 
-who = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text; 
-} else who = m.chat;
-  const user = global.db.data.users[who];
-  const usuario = conn.user.jid.split`@`[0] + '@s.whatsapp.net'
-  const bot = global.db.data.settings[conn.user.jid] || {};
-  const dReason = 'Sin motivo';
-  const msgtext = text || dReason 
-  const sdms = msgtext.replace(/@\d+-?\d* /g, '');
-  const warntext = `${emoji} Etiquete a una persona o responda a un mensaje del grupo para advertir al usuario.`;
-  if (!who) {
-return m.reply(warntext, m.chat, { mentions: conn.parseMention(warntext) });
+  const emoji = '⚠️';
+  const maxWarn = 3;
+
+  // Obtener candidato a advertir
+  let who;
+  if (m.isGroup) {
+    const mentions = m.mentionedJid || [];
+    if (mentions.length > 0) {
+      who = mentions[0];
+    } else if (m.quoted && m.quoted.sender) {
+      who = m.quoted.sender;
+    } else {
+      // Si no hay mención ni quoted, no se puede determinar el usuario
+      const warntext = `${emoji} Etiqueta a una persona o responde a un mensaje del grupo para advertir al usuario.`;
+      return conn.reply(m.chat, warntext, m);
+    }
+  } else {
+    // En privado, advertir al propio chat
+    who = m.chat;
   }
 
-for (let i = 0; i < global.owner.length; i++) {
-ownerNumber = global.owner[i][0];
-if (usuario.replace(/@s\.whatsapp\.net$/, '') === ownerNumber) {
-aa = ownerNumber + '@s.whatsapp.net'
-await conn.reply(m.chat, `…`, m, { mentions: [aa] })
-return
-}}
+  // Protección: no advertir al bot ni a ti mismo
+  const botJid = conn.user.jid;
+  if (who === botJid) {
+    return conn.reply(m.chat, `${emoji} No puedo advertirme a mí mismo, sombras.`, m);
+  }
+  if (who === m.sender) {
+    return conn.reply(m.chat, `${emoji} No puedes advertirte a ti mismo.`, m);
+  }
 
+  // Protección: no advertir a owners
+  try {
+    const owners = (global.owner || []).map(v => (Array.isArray(v) ? v[0] : v)).filter(Boolean);
+    const whoNumber = String(who).split('@')[0];
+    if (owners.includes(whoNumber)) {
+      return conn.reply(m.chat, `🌌❄️ No se puede advertir a un propietario del Shadow-BOT-MD.`, m);
+    }
+  } catch { /* silencioso */ }
+
+  // Motivo limpio (sin menciones crudas en el texto)
+  const dReason = 'Sin motivo';
+  const msgtext = text || dReason;
+  const sdms = msgtext.replace(/@\d{5,}[^\s]*/g, '').trim();
+
+  // Asegurar estructura de usuario en DB
+  global.db.data.users[who] = global.db.data.users[who] || {};
+  const user = global.db.data.users[who];
+  user.warn = user.warn || 0;
+
+  // Incrementar advertencia
   user.warn += 1;
-  await m.reply(`${user.warn == 1 ? `*@${who.split`@`[0]}*` : `*@${who.split`@`[0]}*`} Recibio una advertencia en este grupo!.\nMotivo: ${sdms}\n*Advertencias: ${user.warn}/3*`, null, { mentions: [who] },
+
+  // Aviso de advertencia
+  await conn.reply(
+    m.chat,
+    `🎄🌌 *Advertencia invocada por el Shadow Garden*\n` +
+    `*Usuario:* @${String(who).split('@')[0]}\n` +
+    `*Motivo:* ${sdms}\n` +
+    `*Advertencias:* ${user.warn}/${maxWarn}`,
+    m,
+    { mentions: [who] }
   );
-  if (user.warn >= 3) {
+
+  // Si alcanza el máximo, expulsar y reiniciar contador
+  if (user.warn >= maxWarn) {
     user.warn = 0;
-    await m.reply(`${emoji} Te lo adverti varias veces!!!.\n*@${who.split`@`[0]}* Superaste las *3* advertencias, ahora seras eliminado/a.`, null, { mentions: [who] },
+    await conn.reply(
+      m.chat,
+      `${emoji} Te lo advertí varias veces.\n` +
+      `@${String(who).split('@')[0]} superó las *${maxWarn}* advertencias, ` +
+      `y será sellado fuera del grupo por las sombras.`,
+      m,
+      { mentions: [who] }
     );
+    // Requiere bot admin
     await conn.groupParticipantsUpdate(m.chat, [who], 'remove');
   }
-  return !1;
+
+  return true;
 };
 
 handler.command = ['advertir', 'advertencia', 'warn', 'warning'];
