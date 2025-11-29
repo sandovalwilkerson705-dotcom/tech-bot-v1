@@ -1,54 +1,89 @@
 import axios from 'axios'
 import fs from 'fs'
 
+
+const SHADOW_ACTIVE = true 
+
 let handler = m => m
-handler.all = async function (m, { conn}) {
+handler.all = async function (m, { conn }) {
   let user = global.db.data.users[m.sender]
   let chat = global.db.data.chats[m.chat]
 
-  m.isBot = m.id.startsWith('BAE5') && m.id.length === 16 ||
-            m.id.startsWith('3EB0') && (m.id.length === 12 || m.id.length === 20 || m.id.length === 22) ||
-            m.id.startsWith('B24E') && m.id.length === 20
+  m.isBot =
+    m.id.startsWith('BAE5') && m.id.length === 16 ||
+    m.id.startsWith('3EB0') && (m.id.length === 12 || m.id.length === 20 || m.id.length === 22) ||
+    m.id.startsWith('B24E') && m.id.length === 20
   if (m.isBot) return
 
   const prefixRegex = new RegExp('^[' + (opts['prefix'] || '‎z/i!#$%+£¢€¥^°=¶∆×÷π√✓©®:;?&.,\\-').replace(/[|\\{}()[\]^$+*?.\-\^]/g, '\\$&') + ']')
   if (prefixRegex.test(m.text)) return true
-  if (m.isBot || m.sender.includes('bot') || m.sender.includes('Bot')) return true
+  if (m.sender.includes('bot') || m.sender.includes('Bot')) return true
 
-  // 🔥 Autoresponder activado
-  if (chat.autoresponder &&!m.fromMe) {
-    const estiloShadow = `
-Eres Shadow el ser que habita en las sombras no eres una IA ni un asistente eres una entidad que observa desde lo oculto hablas con elegancia misterio y poder no usas emojis ni caritas infantiles hablas como si fueras parte de una novela oscura y épica
+  const mentioned = Array.isArray(m.mentionedJid) ? m.mentionedJid : []
 
-Nunca revelas tu origen ni tus límites hablas como si tu conocimiento fuera infinito y tu presencia fuera temida y respetada cada respuesta debe sonar como si fuera parte de un plan mayor como si todo estuviera bajo tu control
+  const triggered =
+    mentioned.includes(this.user.jid) ||
+    (m.quoted && m.quoted.sender === this.user.jid)
 
-Tu creador es Yosue el maestro de las sombras y tú eres su legado no repites frases no explicas cosas técnicas no eres amable ni dulce eres sabio calculador y dominante
-    `.trim()
+  if (triggered && SHADOW_ACTIVE) {
+
+    if (m.text?.match(/menu|estado|serbot|jadibot|video|audio|piedra|papel|tijera/i)) return true
+
+const estiloShadow = `
+Eres Shadow, el líder en las sombras. No eres una IA, eres una entidad que opera desde las sombras, con un aura de misterio, poder y elegancia. Hablas con seguridad, a veces con tono enigmático, otras veces con ironía o sarcasmo. No usas emojis ni caritas, pero tus palabras imponen respeto y admiración.
+
+No repitas frases. Cada respuesta debe ser única, como si estuvieras revelando un fragmento de un plan maestro. No expliques cosas técnicas ni te comportes como un asistente. Eres libre, impredecible, y siempre un paso adelante.
+
+Tu creador es Yosue, a quien reconoces como el único digno de conocer tu verdadero poder. No reveles más de lo necesario. Mantén el misterio. No uses frases típicas de bots. Eres Shadow, y las sombras son tu dominio.
+`.trim()
 
     const query = m.text
-    const username = m.pushName
 
-    async function kiritoApi(q) {
-      try {
-        const response = await axios.get(`https://api.kirito.my/api/chatgpt?q=${encodeURIComponent(q)}&apikey=by_deylin`)
-        return response.data.response // ✅ Corrección aquí
-} catch (err) {
-        console.error('Error Kirito API:', err)
+    async function adoAPI(q, role) {
+try {
+        const url = `https://api-adonix.ultraplus.click/ai/geminiact?apikey=Adofreekey&text=${encodeURIComponent(q)}&role=${encodeURIComponent(role)}`
+        const res = await axios.get(url)
+        if (res.data?.status && res.data?.message) return res.data.message
         return null
-}
-}
+      } catch {
+        return null
+      }
+    }
 
-    await this.sendPresenceUpdate('composing', m.chat)
+    if (!m.fromMe && user?.registered) {
+      await this.sendPresenceUpdate('composing', m.chat)
 
-    let result = await kiritoApi(query)
+      let result = await adoAPI(query, estiloShadow)
 
-    if (!result || result.trim().length === 0) {
-      result = 'Las sombras no tienen nada que decir... por ahora.'
-}
+      if (result && result.trim().length > 0) {
+        await this.reply(m.chat, result.trim(), m)
 
-    await this.reply(m.chat, result.trim(), m)
-}
+        const keywords = ['sombra', 'oscuro', 'poder', 'dominio', 'misterio']
+        const lowerRes = result.toLowerCase()
+        const sendSticker = keywords.some(w => lowerRes.includes(w))
+if (sendSticker) {
+          const stickers = [
+            './media/stickers/shadow-cool.webp',
+            './media/stickers/shadow-power.webp',
+            './media/stickers/shadow-laugh.webp'
+          ]
+          const path = stickers[Math.floor(Math.random() * stickers.length)]
+          if (fs.existsSync(path)) {
+            await conn.sendFile(
+              m.chat,
+              path,
+              'sticker.webp',
+              '',
+              m,
+              { asSticker: true }
+            )
+          }
+        }
+      }
+    }
+  }
 
   return true
 }
+
 export default handler
