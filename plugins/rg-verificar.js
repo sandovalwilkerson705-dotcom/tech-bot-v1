@@ -7,7 +7,7 @@
  * pueden sellar un pacto con el Reino de las Sombras..."
  *
  * ┏━━━━━━━━━━━━━━━━━━━━━━━┓
- * ┃     ☽ 𝑺𝒉𝒂𝒅𝒐𝒘 𝑪𝒐𝒅𝒆 ☽     ┃
+ * ┃    ☽ tech bot code ☽     ┃
  * ┗━━━━━━━━━━━━━━━━━━━━━━━┛
  */
 
@@ -65,7 +65,7 @@ Solo los que dominan el arte oculto pueden invocar correctamente...`)
   const sn = createHash('md5').update(m.sender).digest('hex').slice(0, 20)
 
   const certificadoPacto = `
-╭─「 ☽ 𝑷𝒂𝒄𝒕𝒐 𝑺𝒉𝒂𝒅𝒐𝒘 ☽ 」─╮
+╭─「 ☽ pacto Tech bot ☽ 」─╮
 │ ✧ *Nombre:* ${name}
 │ ✧ *Edad:* ${age} años
 │ ✧ *Sello Único:* ${sn}
@@ -76,8 +76,7 @@ Solo los que dominan el arte oculto pueden invocar correctamente...`)
 │ 🕯️ Sellos de Invocación: +25
 │
 ├─ "El poder oculto ahora fluye en ti..."
-│ https://whatsapp.com/channel/0029VbAXuUtB4hdYWC6m2R1h
-╰─「 ☽ 𝑬𝒎𝒊𝒏𝒆𝒏𝒄𝒆 𝒊𝒏 𝑺𝒉𝒂𝒅𝒐𝒘 ☽ 」─╯
+╰─「 ☽ Eminemce un tech bot ☽ 」─╯
 `.trim()
 
   await m.react('🌑')
@@ -97,9 +96,9 @@ Solo los que dominan el arte oculto pueden invocar correctamente...`)
 }
 }, { quoted: m})
 
-  const reinoEspiritual = '120363418112779406@g.us'
+  const reinoEspiritual = '120363420632316786@g.us'
   const mensajeNotificacion = `
-╭─「 🌒 𝑵𝒖𝒆𝒗𝒐 𝑺𝒉𝒂𝒅𝒐𝒘 𝑨𝒔𝒊𝒔𝒕𝒆𝒏𝒕𝒆 🌒 」─╮
+╭─「 🌒 𝑵𝒖𝒆𝒗𝒐 tech bot 𝑨𝒔𝒊𝒔𝒕𝒆𝒏𝒕𝒆 🌒 」─╮
 │ ✧ *Nombre:* ${name}
 │ ✧ *Edad:* ${age} años
 │ ✧ *Sello:* ${sn}
@@ -110,8 +109,8 @@ Solo los que dominan el arte oculto pueden invocar correctamente...`)
 │ 🕯️ Sellos: +25
 │
 │ 📜 *Fecha del Pacto:* ${moment().format('YYYY-MM-DD HH:mm:ss')}
-╰─「 𝑬𝒎𝒊𝒏𝒆𝒏𝒄𝒆 𝒊𝒏 𝑺𝒉𝒂𝒅𝒐𝒘 」─╯
-> 🕶️ SHADOW`
+╰─「 𝑬𝒎𝒊𝒏𝒆𝒏𝒄𝒆 𝒊𝒏 tech bot 」─╯
+> 🕶️ tech bot`
 
   try {
     if (global.conn?.sendMessage) {
