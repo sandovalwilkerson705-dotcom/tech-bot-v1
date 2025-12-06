@@ -86,7 +86,7 @@ const handler = async (m, { conn }) => {
     const media = await q.download()
     if (!media) throw new Error('No se pudo descargar la media')
 
-    const packname = global.packname || '✦ Michi - AI ✦'
+    const packname = global.packname || '🔹 𝙏𝙚𝙘𝙝-𝘽𝙤𝙩 𝐕𝟏 ✦'
     const author = global.author || '© Made with ☁︎ Wirk ✧'
 
     const stiker = await sticker(media, false, packname, author)
