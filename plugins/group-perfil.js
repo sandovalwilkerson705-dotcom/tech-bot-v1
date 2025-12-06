@@ -51,7 +51,7 @@ var handler = async (m, { conn}) => {
   const fraseElegida = frasesShadow[Math.floor(Math.random() * frasesShadow.length)]
 
   let animacion = `
-〘 *Sistema de Sombras* 〙🕸️
+〘 *Sistema de tech bot* 〙🕸️
 
 🔍 Escaneando energía oculta...
 ⏳ Analizando grimorio del portador...
@@ -87,7 +87,7 @@ var handler = async (m, { conn}) => {
 `.trim()
 
   let prem = `
-👹〘 𝐌𝐎𝐃𝐎 𝐒𝐇𝐀𝐃𝐎𝐖: *𝐀𝐂𝐓𝐈𝐕𝐀𝐃𝐎* 〙👹
+👹〘 Modo tech bot: *Activado* 〙👹
 
 🌌 ＧＲＩＭＯＲＩＯ ５ＬＴ（Ａ）
 
