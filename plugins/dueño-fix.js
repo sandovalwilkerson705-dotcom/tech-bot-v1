@@ -32,8 +32,8 @@ errorMessage2 += '\n⚠︎ Mensaje de error: ' + error.message
 await conn.reply(m.chat, errorMessage2, m)
 }}}
 
-handler.help = ['update']
+handler.help = ['carga']
 handler.tags = ['owner']
-handler.command = ['update', 'fix', 'actualizar']
+handler.command = ['carga', 'carga', 'actualizar']
 
 export default handler
