@@ -12,15 +12,15 @@ let handler = async (m, { conn, usedPrefix }) => {
         m.chat,
         {
           text:
-            `┏━━━━━━━━━━━━━━━━━━┓\n🎄 *ACCESO DENEGADO* 🎄\n┗━━━━━━━━━━━━━━━━━━┛\n\n` +
+            `┏━━━━━━━━━━━━━━━━━━┓\n👾 *ACCESO DENEGADO* 🎄\n┗━━━━━━━━━━━━━━━━━━┛\n\n` +
             `🎅 Lo siento, viajero de las sombras...\n` +
             `✨ Para acceder al menú navideño debes estar registrado.\n\n` +
-            `🔐 Usa *${usedPrefix}reg shadow.18* para unirte al Reino.\n` +
+            `🔐 Usa *${usedPrefix}reg wilker.15* para usar comandos.\n` +
             `🎁 ¡Las sombras te esperan!`,
           buttons: [
             {
-              buttonId: `${usedPrefix}reg shadow.18`,
-              buttonText: { displayText: '✅ Reg Shadow.18' },
+              buttonId: `${usedPrefix}reg wilker.18`,
+              buttonText: { displayText: '✅ Reg wilker.15' },
               type: 1,
             },
           ],
@@ -51,9 +51,9 @@ let handler = async (m, { conn, usedPrefix }) => {
     let seconds = Math.floor(uptimeSec % 60);
     let uptimeStr = `${hours}h ${minutes}m ${seconds}s`;
 
-    let botNameToShow = global.botname || "Shadow 🎄";
-    let bannerUrl = global.michipg || "https://n.uguu.se/ZZHiiljb.jpg";
-    let videoUrl = "https://raw.githubusercontent.com/UploadsAdonix/archivos/main/1763142155838-e70c63.mp4";
+    let botNameToShow = global.botname || "tech bot v1";
+    let bannerUrl = global.michipg || "https://files.catbox.moe/ojxw8v.jpg";
+    let videoUrl = "https://files.catbox.moe/ojxw8v.jpg";
     const senderBotNumber = conn.user.jid.split('@')[0];
     const configPath = path.join('./Sessions/SubBot', senderBotNumber, 'config.json');
 
@@ -79,23 +79,23 @@ let handler = async (m, { conn, usedPrefix }) => {
     let intro = 
 `┏━━━━━━━━━━━━━━━━━━━┓
 🎄 *${saludo}* 🎄
-✨ Bienvenido al Reino de las Sombras festivas ✨
-❄️ Que las luces iluminen tu camino y las sombras te protejan ❄️
+✨ Bienvenid@ al menú del bot ❄️
 ┗━━━━━━━━━━━━━━━━━━━┛\n`;
 
     let txt = intro +
-      `🌐 *Canal Navideño de Shadow:*\nhttps://whatsapp.com/channel/0029Vb7GXFc9cDDW4i1gJY1m\n\n` +
+      `🌐 *Canal  de tech bot v1:*\https://whatsapp.com/channel/0029VbBXJ8LF6smp8yehwL1J` +
       `🎅 Soy *${botNameToShow}*, el ser en las sombras ${(conn.user.jid == global.conn.user.jid ? '(Principal 🅥)' : '(Sub-Bot 🅑)')}\n` +
       `🕒 *Hora:* ${timeStr}\n` +
       `📅 *Fecha:* ${dateStr}\n` +
       `⚙️ *Actividad:* ${uptimeStr}\n\n` +
       `❄️ *Comandos mágicos:*`;
 
-    const emojis = ['🎄', '🎁', '✨', '⛄', '🔔', '🎶'];
+    const emojis = ['⚙️', '🫠', '🤖', '👾', '💥', '🪨'];
     let emojiIndex = 0;
 
     for (let tag in menu) {
-      txt += `\n━━━━━━━━━━━━━━━━━━━━━━\n🎅 ${tag.toUpperCase()} 🎅\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+      txt += `\n━━━━━━━━━━━━━━━━━━━━━━\n 🤖
+ ${tag.toUpperCase()} 🎅\n━━━━━━━━━━━━━━━━━━━━━━\n`;
       for (let plugin of menu[tag]) {
         for (let cmd of plugin.help) {
           let emoji = emojis[emojiIndex % emojis.length];
@@ -105,7 +105,7 @@ let handler = async (m, { conn, usedPrefix }) => {
       }
     }
 
-    txt += `\n\n🎄✨ *Creado por Yosue uwu* ✨🎄`;
+    txt += `\n\n🎄✨ *Creado por Wilker ofc* ✨🎄`;
 
     await conn.sendMessage(m.chat, { react: { text: '🎅', key: m.key } });
 
@@ -132,8 +132,8 @@ let handler = async (m, { conn, usedPrefix }) => {
                 {
                   name: "cta_url",
                   buttonParamsJson: JSON.stringify({
-                    display_text: "🌐 Canal de Shadow",
-                    url: "https://whatsapp.com/channel/0029Vb7GXFc9cDDW4i1gJY1m"
+                    display_text: "🌐 Canal de tech bot v1",
+                    url: "https://whatsapp.com/channel/0029VbBXJ8LF6smp8yehwL1J"
                   })
                 }
               ],
@@ -152,7 +152,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     await conn.relayMessage(m.chat, msg.message, {});
 
   } catch (e) {
-    conn.reply(m.chat, "👻 Error en las sombras navideñas...", m);
+    conn.reply(m.chat, "👻 hay error en el menu...", m);
   }
 };
 
