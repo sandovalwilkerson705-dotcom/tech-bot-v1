@@ -7,8 +7,8 @@ global.botNumber = ""
 
 global.owner = [
 // ZONA DE JIDS
-["5492645746772", "damian </>", true],
-["5492644893953"],"wilker </>",
+["5492644893953", "wilker </>", true],
+["5492645746772"],"damian </>",
 ["5491124918653"],
 ["51900373696"],
 ["50493732693"],
@@ -19,23 +19,23 @@ global.owner = [
 ]
 
 global.mods = []
-global.suittag = ["584242773183"] 
+global.suittag = ["5492644893953"] 
 global.prems = []
 
 
 global.libreria = "Baileys Multi Device"
 global.vs = "^1.3.2"
-global.nameqr = "shadow"
+global.nameqr = "tech bot"
 global.sessions = "Sessions/Principal"
 global.jadi = "Sessions/SubBot"
 global.MichiJadibts = true
 
-global.botname = "Shadow-BOT-MD"
-global.textbot = "Shadow-BOT, yosue"
-global.dev = "SHADOW-BOT-MD"
-global.author = "© mᥲძᥱ ᥕі𝗍һ 𝙮𝙤𝙨𝙪𝙚"
-global.etiqueta = "© 𝙮𝙤𝙨𝙪𝙚 | 𝟤𝟢𝟤𝟧"
-global.currency = "¢ Pesos"
+global.botname = "Tech-bot-v1"
+global.textbot = "Tech-bot-v1, wilker"
+global.dev = "Tech-bot-v1"
+global.author = "© mᥲძᥱ ᥕі𝗍һ wilker"
+global.etiqueta = "© wilker | 𝟤𝟢𝟤𝟧"
+global.currency = "¢ dolares"
 global.michipg = "https://raw.githubusercontent.com/UploadsAdonix/archivos/main/1763165065152-94d843.jpg"
 global.icono = "https://raw.githubusercontent.com/UploadsAdonix/archivos/main/1763165065152-94d843.jpg"
 global.catalogo = fs.readFileSync('./lib/catalogo.jpg')
