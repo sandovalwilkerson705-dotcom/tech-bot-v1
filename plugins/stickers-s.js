@@ -1,56 +1,113 @@
-import { sticker } from '../lib/sticker.js'
-import uploadFile from '../lib/uploadFile.js'
-import uploadImage from '../lib/uploadImage.js'
-import { webp2png } from '../lib/webp2mp4.js'
+import fs from 'fs'
+import path from 'path'
+import crypto from 'crypto'
+import { spawn } from 'child_process'
+import fluent_ffmpeg from 'fluent-ffmpeg'
+import fetch from 'node-fetch'
+import { fileTypeFromBuffer } from 'file-type'
+import webp from 'node-webpmux'
 
-let handler = async (m, { conn, args }) => {
-    let stiker = false
-    let userId = m.sender
-    let packstickers = global.db.data.users[userId] || {}
-    let texto2 = packstickers.text2 || '🌌❄️ Shadow Garden Navidad'
-    let texto1 = ''
+const tmp = path.join(process.cwd(), 'tmp')
+if (!fs.existsSync(tmp)) fs.mkdirSync(tmp)
 
-    if (args.length > 0) {
-        texto1 = args.join(' ').trim() || '🎄 Sombras Festivas'
-    } else {
-        texto1 = '🎄 Sombras Festivas'
-    }
-
-    try {
-        let q = m.quoted ? m.quoted : m
-        let mime = (q.msg || q).mimetype || q.mediaType || ''
-
-        if (/webp|image|video/g.test(mime) && q.download) {
-            if (/video/.test(mime) && (q.msg || q).seconds > 16)
-                return conn.reply(m.chat, '🌌✧ *Las sombras no aceptan videos mayores a 15 segundos...*', m)
-
-            let buffer = await q.download()
-            await m.react('🕓')
-            let marca = [texto1, texto2]
-            stiker = await sticker(buffer, false, marca[0], marca[1])
-        } else if (args[0] && isUrl(args[0])) {
-            let buffer = await sticker(false, args[0], texto1, texto2)
-            stiker = buffer
-        } else {
-            return conn.reply(m.chat, '🎄《✧》 *Invoca un arte sombrío respondiendo a una imagen o video.*', m)
-        }
-    } catch (e) {
-        await conn.reply(m.chat, '⚠︎🌌 *Las sombras detectaron un error:* ' + e.message, m)
-        await m.react('✖️')
-    } finally {
-        if (stiker) {
-            conn.sendFile(m.chat, stiker, 'sticker.webp', '🎅✨ *Sticker invocado por el Shadow Garden en esta navidad...*', m)
-            await m.react('✅')
-        }
-    }
+async function addExif(webpSticker, packname, author, categories = [''], extra = {}) {
+  const img = new webp.Image()
+  const stickerPackId = crypto.randomBytes(32).toString('hex')
+  const json = {
+    'sticker-pack-id': stickerPackId,
+    'sticker-pack-name': packname,
+    'sticker-pack-publisher': author,
+    'emojis': categories,
+    ...extra
+  }
+  const exifAttr = Buffer.from([
+    0x49, 0x49, 0x2A, 0x00, 0x08, 0x00, 0x00, 0x00,
+    0x01, 0x00, 0x41, 0x57, 0x07, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x16, 0x00, 0x00, 0x00
+  ])
+  const jsonBuffer = Buffer.from(JSON.stringify(json), 'utf8')
+  const exif = Buffer.concat([exifAttr, jsonBuffer])
+  exif.writeUIntLE(jsonBuffer.length, 14, 4)
+  await img.load(webpSticker)
+  img.exif = exif
+  return await img.save(null)
 }
 
-handler.help = ['sticker']
+async function sticker(img, url, packname, author) {
+  if (url) {
+    let res = await fetch(url)
+    if (res.status !== 200) throw await res.text()
+    img = await res.buffer()
+  }
+  const type = await fileTypeFromBuffer(img) || { mime: 'application/octet-stream', ext: 'bin' }
+  if (type.ext === 'bin') throw new Error('Tipo de archivo inválido')
+
+  const tmpFile = path.join(tmp, `${Date.now()}.${type.ext}`)
+  const outFile = `${tmpFile}.webp`
+  await fs.promises.writeFile(tmpFile, img)
+
+  await new Promise((resolve, reject) => {
+    const ff = /video/i.test(type.mime)
+      ? fluent_ffmpeg(tmpFile).inputFormat(type.ext)
+      : fluent_ffmpeg(tmpFile).input(tmpFile)
+
+    ff.addOutputOptions([
+      `-vcodec`, `libwebp`, `-vf`,
+      `scale='min(512,iw)':min'(512,ih)':force_original_aspect_ratio=decrease,fps=15, pad=512:512:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`
+    ])
+      .toFormat('webp')
+      .save(outFile)
+      .on('error', reject)
+      .on('end', resolve)
+  })
+
+  const buffer = await fs.promises.readFile(outFile)
+  fs.promises.unlink(tmpFile).catch(() => {})
+  fs.promises.unlink(outFile).catch(() => {})
+
+  return await addExif(buffer, packname, author)
+}
+
+const handler = async (m, { conn }) => {
+  const q = m.quoted ? m.quoted : m
+  const mime = (q.msg || q).mimetype || ''
+
+  if (!/image|video/.test(mime)) {
+    return conn.sendMessage(
+      m.chat,
+      { text: `✳️ *Uso Correcto:*\n➤ Responde a una *imagen/video* con el comando \`.s\` para convertirlo en sticker.`},
+      { quoted: m }
+    )
+  }
+
+  await m.react('⏳')
+
+  try {
+    const media = await q.download()
+    if (!media) throw new Error('No se pudo descargar la media')
+
+    const packname = global.packname || '✦ Michi - AI ✦'
+    const author = global.author || '© Made with ☁︎ Wirk ✧'
+
+    const stiker = await sticker(media, false, packname, author)
+
+    if (!Buffer.isBuffer(stiker)) throw new Error('No se pudo generar el sticker')
+
+    await conn.sendMessage(m.chat, { sticker: stiker}, { quoted: m })
+    await m.react('✅')
+  } catch (e) {
+    console.error(e)
+    await m.react('❌')
+    await conn.sendMessage(
+      m.chat,
+      { text: '❌ No se pudo generar el sticker'},
+      { quoted: m }
+    )
+  }
+}
+
+handler.help = ['sticker', 's']
 handler.tags = ['sticker']
-handler.command = ['s', 'sticker']
+handler.command = ['sticker', 's']
 
 export default handler
-
-const isUrl = (text) => {
-    return text.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)(jpe?g|gif|png)/, 'gi'))
-        }
