@@ -1,28 +1,15 @@
+<img src="https://readme-typing-svg.herokuapp.com/?font=mono&size=30&duration=4000&color=0000FF&center=falso&vCenter=falso&lines=🜛+TECH-BOT+🜛;۞+TEAM+TECH+۞;@WILKER-OFC✞">
 
-![shadow-bot-MD](https://upload.hackstorex.com/uploads/53935619d15e1c24a3bca2ce40831d3b.jpg)
-html
-<p align="center">
-  <img src="https://img.shields.io/github/stars/sandovalwilkerson705-dotcom?/INFILTRADOT-BOT?style=flat-square&color=red&logo=github" />
-  <img src="https://img.shields.io/github/followers/sandovalwilkerson705-dotcom?style=social" />
-  <img src="https://img.shields.io/badge/%F0%9F%91%8D%20%20%20Creador-damian-red?style=for-the-badge" />
-</p>
+> Creador del bot
 
-%;" />
-</a>
-<a href="https://github.com/Miku-18">
-  <img src="https://github.com/Miku-18.png" width="80" height="80" alt="miku" style="border-radius: 50%;" />
-</a>
-<a href="https://github.com/GianPoolS">
-  <img src="https://github.com/GianPoolS.png" width="80" height="80" alt="GianPools"style="border-radius: 50%;" />
-</a>
-<a href="https://github.com/dev-fedexyzz">
-  <img src="https://github.com/dev-fedexyzz.png" width="80" height="80" alt="dev-fedexyzz"style="border-radius: 50%;" />
-</a>
-<a href="https://github.com/SoySapo6">
-  <img src="https://github.com/SoySapo6.png" width="80" height="80" alt="SoySapo6"style="border-radius: 50%;" />
-</a>
+> 🔶 WILKER OFC
 
-> 💙 creador de INFLITRADO Bot
-> 💙 Damián yt
-> 🔶 colaboradores 
-> ⭐ repooficialdemster
+> COLABORADORES OFICIALES
+
+> 🔶 Damian_yt aporta número
+
+> 🔶 Shadow aporta apis
+
+> 🔶 Ado21 cambia apis
+
+> 🔶 BOT EN DESARROLLO 
