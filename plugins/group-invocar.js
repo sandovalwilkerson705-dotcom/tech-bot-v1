@@ -1,62 +1,98 @@
-const handler = async (msg, { conn }) => {
+import { downloadContentFromMessage } from '@whiskeysockets/baileys'
+
+const handler = async (m, { conn, args }) => {
   try {
-    const chatId = msg.key.remoteJid;
-    const sender = (msg.key.participant || msg.key.remoteJid).replace(/[^0-9]/g, '');
-    const isGroup = chatId.endsWith('@g.us');
+    const chatId = m.chat
+    const senderJid = m.key.participant || m.sender
+    const senderNum = senderJid.replace(/[^0-9]/g, "")
+    const botNumber = conn.user?.id.split(":")[0].replace(/[^0-9]/g, "")
 
-    await conn.sendMessage(chatId, { react: { text: '🎄', key: msg.key } });
 
-    if (!isGroup) {
-      await conn.sendMessage(chatId, {
-        text: `❒ Este comando solo puede ejecutarse dentro de grupos.`,
-        quoted: msg
-      });
-      return;
+    const metadata = await conn.groupMetadata(chatId)
+    const participant = metadata.participants.find(p => p.id.includes(senderNum))
+    const isAdmin = participant?.admin === 'admin' || participant?.admin === 'superadmin'
+    const isBot = botNumber === senderNum
+
+
+    const allMentions = metadata.participants.map(p => p.id)
+    let messageToForward = null
+    let hasMedia = false
+
+    if (m.quoted?.message) {
+      const quoted = m.quoted.message
+
+      if (quoted.conversation) {
+        messageToForward = { text: quoted.conversation }
+      } else if (quoted.extendedTextMessage?.text) {
+        messageToForward = { text: quoted.extendedTextMessage.text }
+      } else if (quoted.imageMessage) {
+        const stream = await downloadContentFromMessage(quoted.imageMessage, 'image')
+        let buffer = Buffer.alloc(0)
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk])
+        const mimetype = quoted.imageMessage.mimetype || 'image/jpeg'
+        const caption = quoted.imageMessage.caption || ''
+        messageToForward = { image: buffer, mimetype, caption }
+        hasMedia = true
+      } else if (quoted.videoMessage) {
+        const stream = await downloadContentFromMessage(quoted.videoMessage, 'video')
+        let buffer = Buffer.alloc(0)
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk])
+        const mimetype = quoted.videoMessage.mimetype || 'video/mp4'
+        const caption = quoted.videoMessage.caption || ''
+        messageToForward = { video: buffer, mimetype, caption }
+        hasMedia = true
+      } else if (quoted.audioMessage) {
+        const stream = await downloadContentFromMessage(quoted.audioMessage, 'audio')
+        let buffer = Buffer.alloc(0)
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk])
+        const mimetype = quoted.audioMessage.mimetype || 'audio/mp3'
+        messageToForward = { audio: buffer, mimetype }
+        hasMedia = true
+      } else if (quoted.stickerMessage) {
+        const stream = await downloadContentFromMessage(quoted.stickerMessage, 'sticker')
+        let buffer = Buffer.alloc(0)
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk])
+        messageToForward = { sticker: buffer }
+        hasMedia = true
+      } else if (quoted.documentMessage) {
+        const stream = await downloadContentFromMessage(quoted.documentMessage, 'document')
+        let buffer = Buffer.alloc(0)
+        for await (const chunk of stream) buffer = Buffer.concat([buffer, chunk])
+        const mimetype = quoted.documentMessage.mimetype || 'application/pdf'
+        const caption = quoted.documentMessage.caption || ''
+        messageToForward = { document: buffer, mimetype, caption }
+        hasMedia = true
+      }
     }
 
-    const metadata = await conn.groupMetadata(chatId);
-    const participants = metadata.participants;
-    const mentionIds = participants.map(p => p.id);
+    if (!hasMedia && args.join(' ').trim().length > 0) {
+      messageToForward = { text: args.join(' ') }
+    }
 
-    const messageText = msg.message?.conversation || msg.message?.extendedTextMessage?.text || '';
-    const args = messageText.trim().split(' ').slice(1);
-    const extraMsg = args.join(' ');
-
-    let texto = 
-`┏━━━━━━━━━━━━━━━━━━━┓
-🎅 *Invocación Navideña de las Sombras* 🎅
-┗━━━━━━━━━━━━━━━━━━━┛
-
-✐ Grupo: *${metadata.subject}*
-ⴵ Miembros: *${participants.length}*`;
-
-    if (extraMsg) texto += `\n✰ Mensaje: *${extraMsg}*`;
-
-    texto += `\n\n❒ Menciones:\n`;
-    texto += participants.map(p => `» @${p.id.split('@')[0]}`).join('\n');
-
-    texto += `\n\n❄️ Versión: *${vs}*\n`;
-    texto += `\n✨ "Las sombras celebran bajo la nieve... ¿Quién más desea ser invocado en esta noche eterna?" ✨`;
+    if (!messageToForward) {
+      await conn.sendMessage(chatId, {
+        text: '⚠️ Debes responder a un mensaje o escribir un texto para etiquetar.'
+      }, { quoted: m })
+      return
+    }
 
     await conn.sendMessage(chatId, {
-      text: texto,
-      mentions: mentionIds
-    }, { quoted: msg });
+      ...messageToForward,
+      mentions: allMentions
+    }, { quoted: m })
 
   } catch (error) {
-    console.error('❌ Error en el comando tagall:', error);
-    await conn.sendMessage(msg.key.remoteJid, {
-      text: `❒ Ocurrió un error al ejecutar el comando *tagall*.`,
-      quoted: msg
-    });
+    console.error('❌ Error en el comando tag:', error)
+    await conn.sendMessage(m.chat, {
+      text: '❌ Ocurrió un error al ejecutar el comando tag.'
+    }, { quoted: m })
   }
-};
+}
 
-handler.tags = ['grupo'];
-handler.help = ['invocar'];
-// ✅ Ahora funciona con y sin prefijo
-handler.command = /^(tagall|invocar|todos)$/i;
-handler.group = true;
-handler.admin = true;
+handler.command = ['tag']
+handler.help = ['tag']
+handler.tags = ['group']
+handler.group = true
+handler.admin = true
 
-export default handler;
+export default handler
