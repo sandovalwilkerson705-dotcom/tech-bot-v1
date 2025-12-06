@@ -19,7 +19,7 @@ export async function before(m, { conn }) {
     const text = m.text.toLowerCase();
 
     // ⚠️ Si mencionan al creador
-    if (text.includes(creatorNumber) || text.includes('yosue')) {
+    if (text.includes(creatorNumber) || text.includes('wilker')) {
         return conn.reply(
             m.chat,
             `⚠️ *No etiquetes al creador. Si tienes dudas, contáctalo directamente al privado.*`,
