@@ -13,10 +13,10 @@ let handler = async (m, { conn, usedPrefix }) => {
         {
           text:
             `┏━━━━━━━━━━━━━━━━━━┓\n👾 *ACCESO DENEGADO* 🎄\n┗━━━━━━━━━━━━━━━━━━┛\n\n` +
-            `🎅 Lo siento, viajero de las sombras...\n` +
-            `✨ Para acceder al menú navideño debes estar registrado.\n\n` +
+            `🎅 Lo siento, regístrate para usar el menu...\n` +
+            `✨ Para acceder al menú  debes estar registrado.\n\n` +
             `🔐 Usa *${usedPrefix}reg wilker.15* para usar comandos.\n` +
-            `🎁 ¡Las sombras te esperan!`,
+            `🎁 ¡Los nuevos comandos te esperan!`,
           buttons: [
             {
               buttonId: `${usedPrefix}reg wilker.18`,
