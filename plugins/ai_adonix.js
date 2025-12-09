@@ -10,7 +10,7 @@ let handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     await m.react('🕒');
 
-    const apiURL = `https://myapiadonix.vercel.app/api/adonix?q=${encodeURIComponent(text)}`;
+    const apiURL = `https://api-adonix.ultraplus.click/ai/gemini?apikey=DemonKeytechbot${encodeURIComponent(text)}`;
     const res = await fetch(apiURL);
     const data = await res.json();
 
