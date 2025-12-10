@@ -66,14 +66,14 @@ let handler = async (m, { conn, usedPrefix }) => {
     const timeStr = now.format("HH:mm:ss");
     const dateStr = now.format("DD/MM/YYYY");
 
-    let saludo = "🎅 ¡Feliz Navidad!";
-    if (hour >= 12 && hour < 18) saludo = "🎁 ¡Feliz tarde navideña!";
-    else if (hour >= 18 || hour < 5) saludo = "🌙 ¡Feliz noche navideña!";
+    let saludo = "✅ ¡Pasa lindo dia!";
+    if (hour >= 12 && hour < 18) saludo = "🎁 ¡Pasa Feliz tarde!";
+    else if (hour >= 18 || hour < 5) saludo = "🌙 ¡Que pases linda noche!";
 
     let intro = 
 `┏━━━━━━━━━━━━━━━━━━━┓
-🎄 *${saludo}* 🎄
-❄️*TECH BOT V1*❄️
+ 🎄 *${saludo}* 🎄
+       ❄️*TECH BOT V1*❄️
 ┗━━━━━━━━━━━━━━━━━━━┛\n`;
     let txt = intro +
       `🎅 Soy *Tech bot v1*, bot en desarrollo ${(conn.user.jid == global.conn.user.jid ? '(Principal 🅥)' : '(Sub-Bot 🅑)')}\n` +
