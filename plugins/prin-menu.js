@@ -72,11 +72,10 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     let intro = 
 `┏━━━━━━━━━━━━━━━━━━━┓
+🎄 *${saludo}* 🎄
     ❄️*TECH BOT V1*❄️
 ┗━━━━━━━━━━━━━━━━━━━┛\n`;
     let txt = intro +
-    const header = `
-${saludo} ${tagUsuario} 👋
       `🎅 Soy *Tech bot v1*, bot en desarrollo ${(conn.user.jid == global.conn.user.jid ? '(Principal 🅥)' : '(Sub-Bot 🅑)')}\n` +
       `🕒 *Hora:* ${timeStr}\n` +
       `📅 *Fecha:* ${dateStr}\n` +
