@@ -60,7 +60,7 @@ let handler = async (m, { conn, usedPrefix }) => {
       } catch (e) {}
     }
 
-    const tz = "America/Tegucigalpa";
+    const tz = "America/Venezuela";
     const now = moment.tz(tz);
     const hour = now.hour();
     const timeStr = now.format("HH:mm:ss");
@@ -68,7 +68,7 @@ let handler = async (m, { conn, usedPrefix }) => {
 
     let saludo = "✅ ¡Pasa lindo dia!";
     if (hour >= 12 && hour < 18) saludo = "🎁 ¡Pasa Feliz tarde!";
-    else if (hour >= 18 || hour < 5) saludo = "🌙 ¡Que pases linda noche!";
+    else if (hour >= 18 || hour < 5) saludo = "🌙 ¡Pasa linda noche!";
 
     let intro = 
 `┏━━━━━━━━━━━━━━━━━━━┓
