@@ -4,7 +4,7 @@ import fetch from "node-fetch"
 const handler = async (m, { conn, text }) => {
   if (!text) return m.reply("Escribe el nombre del video o un enlace de YouTube.")
 
-  await m.react("👻")
+  await m.react("🖤")
 
   try {
     let url = text
@@ -26,14 +26,14 @@ const handler = async (m, { conn, text }) => {
       thumbnail = video.thumbnail
     }
 
-    const caption = `🖤 tech bot v1 — Selecciona una
+    const caption = `👻 tech bot v1 — Selección 
 
-✨ Título: ${title}
-🔔 Canal: ${authorName}
-🎬 Duración: ${durationTimestamp}
+👻 Título: ${title}
+🤍 Canal: ${authorName}
+🖤 Duración: ${durationTimestamp}
 👁️ Vistas: ${views}
 
-🎁 Elige qué deseas descargar:`
+👻 Elige qué deseas descargar:`
 
     const buttons = [
       { buttonId: `shadowaudio ${url}`, buttonText: { displayText: "🎧 Descargar Audio" }, type: 1 },
@@ -45,14 +45,14 @@ const handler = async (m, { conn, text }) => {
       {
         image: { url: thumbnail },
         caption,
-        footer: "tech bot v1 — Descargas",
+        footer: "tech bot — Descargas",
         buttons,
         headerType: 4
       },
       { quoted: m }
     )
 
-    await m.react("🤍")
+    await m.react("👻")
 
   } catch (e) {
     m.reply("Error: " + e.message)
@@ -68,11 +68,11 @@ handler.before = async (m, { conn }) => {
   const cmd = parts.shift()
   const url = parts.join(" ")
 
-  if (cmd === "techbotaudio") {
+  if (cmd === "shadowaudio") {
     return downloadMedia(conn, m, url, "mp3")
   }
 
-  if (cmd === "techbotvideo") {
+  if (cmd === "shadowvideo") {
     return downloadMedia(conn, m, url, "mp4")
   }
 }
@@ -122,7 +122,7 @@ const downloadMedia = async (conn, m, url, type) => {
     await conn.sendMessage(
       m.chat,
       {
-        text: `👻 Tech bot v1 — Completado\n\n✨ Título: ${fileTitle}`,
+        text: `👻 tech bot v1 — Completado\n\n🤍 Título: ${fileTitle}`,
         edit: sent.key
       }
     )
@@ -137,7 +137,7 @@ const downloadMedia = async (conn, m, url, type) => {
 
 const cleanName = (name) => name.replace(/[^\w\s-_.]/gi, "").substring(0, 50)
 
-handler.command = ["playcd", "ultrayt1", "ultrayt"]
+handler.command = ["playcd", "ytcd", "ytsearchcd"]
 handler.tags = ["descargas"]
 handler.register = true
 
