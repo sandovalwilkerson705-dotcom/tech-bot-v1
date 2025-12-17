@@ -23,7 +23,7 @@ return conn.reply(m.chat, `⚠︎ Se ha producido un problema\n> Usa *${usedPref
 }}
 
 handler.command = ['lyrics']
-handler.help = ['music']
+handler.help = ['aud']
 handler.tags = ['tools']
 
 export default handler
