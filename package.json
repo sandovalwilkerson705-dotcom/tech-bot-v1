@@ -1,7 +1,7 @@
 {
-"name": "shadowMD",
+"name": "tech-bot-v1",
 "version": "1.3.2",
-"description": "Shadow WhatsApp Bot Multi Device",
+"description": "Tech bot v1 WhatsApp Bot Multi Device",
 "main": "index.js",
 "type": "module",
 "directories": {
