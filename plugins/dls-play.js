@@ -5,9 +5,9 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 try {
 
 if (!text.trim()) 
-return conn.reply(m.chat, `🌸✨ *Onii-chan~ escribe el nombre de la canción, porfis* 💗`, m)
+return conn.reply(m.chat, `👻🖤 *Onii-chan~ escribe el nombre de la canción, porfis* 🤍`, m)
 
-await m.react('🐾')
+await m.react('🤍')
 
 const videoMatch = text.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/|v\/))([a-zA-Z0-9_-]{11})/)
 const query = videoMatch ? 'https://youtu.be/' + videoMatch[1] : text
@@ -17,26 +17,26 @@ const result = videoMatch
 ? search.videos.find(v => v.videoId === videoMatch[1]) || search.all[0] 
 : search.all[0]
 
-if (!result) throw '💔 *Nyah~ no encontré nada con ese nombre...*'
+if (!result) throw '🖤 *Nyah~ no encontré nada con ese nombre...*'
 
 const { title, thumbnail, timestamp, views, ago, url, author, seconds } = result
 
 if (seconds > 1800) 
-throw '😿 *Ese video es muuuy largo (máx 10 min, nyah~)*'
+throw '👻 *Ese video es muuuy largo (máx 10 min, nyah~)*'
 
 const vistas = formatViews(views)
 
 const info = `
-🌸 *Kawaii Player — Info del vídeo* 🌸
+👻 *Kawaii Player — Info del vídeo* 🤍
 
-💗 *Título:* ${title}
-🎀 *Canal:* ${author.name}
+👻 *Título:* ${title}
+🖤 *Canal:* ${author.name}
 👀 *Vistas:* ${vistas}
-⏱️ *Duración:* ${timestamp}
+⏰ *Duración:* ${timestamp}
 📅 *Publicado:* ${ago}
 🔗 *Link:* ${url}
 
-*UwU dame un momentito mientras lo preparo~ 💞*
+*Espera un momento estoy enviando 👻*
 `.trim()
 
 const thumb = (await conn.getFile(thumbnail)).data
@@ -48,7 +48,7 @@ if (['play', 'yta', 'ytmp3', 'playaudio'].includes(command)) {
 const audio = await getAud(url)
 if (!audio?.url) throw '😿 *No pude obtener el audio UwU*'
 
-m.reply(`🍓 *Audio listo!* 🎧\n✨ Proxy usado: ${audio.api}`)
+m.reply(`👻 *Audio listo!* 🎧\n✨ Proxy usado: ${audio.api}`)
 
 await conn.sendMessage(
 m.chat,
@@ -63,13 +63,13 @@ await m.react('🎶')
 else if (['play2', 'ytv', 'ytmp4', 'mp4'].includes(command)) {
 
 const video = await getVid(url)
-if (!video?.url) throw '😿 *No pude convertir el video nyah~*'
+if (!video?.url) throw '👻 *No pude convertir el video nyah~*'
 
-m.reply(`🎀 *Video cargado correctamente* 🍥\n🌟 Proxy usado: ${video.api}`)
+m.reply(`👻 *Video cargado correctamente* 🖤\n🤍 Proxy usado: ${video.api}`)
 
 await conn.sendFile(m.chat, video.url, `${title}.mp4`, `✨ ${title}`, m)
 
-await m.react('📽️')
+await m.react('👻')
 }
 
 } catch (e) {
