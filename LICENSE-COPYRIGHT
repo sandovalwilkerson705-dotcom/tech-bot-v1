@@ -1,0 +1,111 @@
+# ACUERDO DE LICENCIA Y DERECHOS DE AUTOR
+## PARA WILKER OFC 
+*NOMBRE DEL BOT* *TECH-BOT-V1*
+
+---
+
+### DECLARACIÓN DE DERECHOS DE AUTOR
+© [AÑO ACTUAL] WILKER OFC. TODOS LOS DERECHOS RESERVADOS.
+
+El software "WILKER OFC BOT" (en adelante, "la Obra") es una creación original protegida por las leyes de derechos de autor internacionales y nacionales. WILKER OFC (en adelante, "el Titular") es el ÚNICO Y EXCLUSIVO TITULAR de todos los derechos de autor, derechos morales, derechos patrimoniales y derechos conexos sobre la Obra en su totalidad y sus componentes.
+
+---
+
+### ARTÍCULO 1: PROPIEDAD INTELECTUAL
+1.1. La estructura del código, los comandos, las funciones, los nombres, el diseño arquitectónico, la secuencia de operaciones y cualquier elemento creativo incorporado en la Obra son propiedad exclusiva del Titular.
+
+1.2. Se establece EXPRESAMENTE que los siguientes elementos son INDISOCIABLES de la Obra y gozan de protección especial:
+   - Comandos que contengan: `/wilker`, `/wilkercmd`, `/ofc`, `/wilkergen` o variantes fonéticas/gráficas
+   - Mensajes de autoría: "Creado por WILKER OFC", "Desarrollado por WILKER OFC"
+   - Comandos de atribución: `/creator`, `/creditos`, `/derechos`, `/copyright`
+   - Estructura de respuesta que incluya el nombre "WILKER OFC"
+
+---
+
+### ARTÍCULO 2: LICENCIA DE USO RESTRINGIDA
+2.1. El Titular otorga una LICENCIA NO EXCLUSIVA, INTRANSFERIBLE Y REVOCABLE para usar la Obra, sujeta a las siguientes RESTRICCIONES ABSOLUTAS:
+
+2.2. PROHIBICIÓN MODIFICATORIA (CLAÚSULA IRREMUNCIABLE):
+   QUEDA TERMINANTEMENTE PROHIBIDO MODIFICAR, ALTERAR, ELIMINAR, OCULTAR O DESVIRTUAR CUALQUIER ELEMENTO QUE IDENTIFIQUE AL TITULAR COMO CREADOR. Esta cláusula es esencial y su violación constituye infracción grave a los derechos morales del autor.
+
+2.3. Toda copia, distribución o uso público de la Obra deberá mantener ÍNTEGRAMENTE:
+   - Los créditos de autoría en el código fuente
+   - Los comandos con nombres del Titular
+   - Los mensajes de atribución en las respuestas del bot
+
+---
+
+### ARTÍCULO 3: REGISTRO Y PRUEBA DE AUTORÍA
+3.1. El Titular declara haber implementado MECANISMOS TÉCNICOS DE VERIFICACIÓN que permiten:
+   - Detectar modificaciones no autorizadas
+   - Identificar eliminación de créditos
+   - Registrar intentos de alteración de la atribución
+
+3.2. Cualquier evidencia técnica de modificación de los comandos protegidos será considerada PRUEBA SUFICIENTE de violación de derechos de autor.
+
+---
+
+### ARTÍCULO 4: SANCIONES POR INFRACCIÓN
+4.1. La violación de esta licencia, especialmente la modificación o eliminación de elementos de atribución, dará lugar a:
+   - MULTA COMPENSATORIA: USD $5,000 por cada instancia de infracción
+   - DAÑOS PUNITIVOS: USD $10,000 adicionales por daño moral al Titular
+   - COSTAS JUDICIALES Y HONORARIOS DE ABOGADOS
+
+4.2. ACCIONES LEGALES DISPONIBLES:
+   - Notificación DMCA a GitHub, WhatsApp y otros proveedores
+   - Demanda por violación de derechos de autor (hasta USD $150,000 por obra según leyes aplicables)
+   - Acción por competencia desleal y apropiación indebida
+
+---
+
+### ARTÍCULO 5: TERMINACIÓN AUTOMÁTICA
+5.1. Esta licencia se TERMINARÁ AUTOMÁTICAMENTE, sin necesidad de notificación, ante:
+   - Cualquier intento de modificar comandos con el nombre "WILKER OFC"
+   - Eliminación de referencias al Titular
+   - Distribución de versiones alteradas
+
+5.2. Tras la terminación, el usuario deberá:
+   - Cesar inmediatamente todo uso de la Obra
+   - Destruir todas las copias en su poder
+   - Eliminar implementaciones públicas o privadas
+
+---
+
+### ARTÍCULO 6: JURISDICCIÓN Y LEY APLICABLE
+6.1. Este acuerdo se regirá por la Convención de Berna para la Protección de las Obras Literarias y Artísticas y las leyes de derechos de autor del país de residencia del Titular.
+
+6.2. Cualquier disputa se resolverá ante los tribunales competentes en la jurisdicción del Titular.
+
+---
+
+### DECLARACIÓN DE ACEPTACIÓN
+
+YO, [NOMBRE DEL USUARIO], declaro bajo fe de juramento:
+
+1. Que he leído y comprendido completamente este acuerdo.
+2. Que reconozco a WILKER OFC como ÚNICO TITULAR de los derechos de autor sobre la Obra.
+3. Que ME COMPROMETO a mantener intactos todos los comandos, créditos y referencias al Titular.
+4. Que acepto las sanciones establecidas en caso de infracción.
+
+---
+
+FIRMA DEL USUARIO/LICENCIATARIO:
+___________________________
+Nombre: 
+Fecha: 
+Email: 
+
+TITULAR DE LOS DERECHOS:
+WILKER OFC
+© [2025] - Todos los derechos reservados
+
+---
+
+### ANEXO TÉCNICO:
+Los siguientes comandos son INMODIFICABLES POR CONTRATO:
+- ✅ `/wilker *` - Cualquier comando que comience con "wilker"
+- ✅ `/ofc *` - Cualquier comando que comience con "ofc"
+- ✅ Comandos de información que muestren "WILKER OFC"
+- ✅ Respuestas que incluyan "© WILKER OFC"
+
+*Esta licencia tiene fuerza contractual y valor probatorio en procedimientos legales.*
